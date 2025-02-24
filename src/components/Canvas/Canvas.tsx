@@ -13,7 +13,7 @@ export const Canvas = () => {
   const canvas = useRef<any>(null);
 
   useEffect(() => {
-    // TODO: add fetch to synchronize data from specific board
+    // TODO: add fetch to synchronize data from specific board.
     socket.current = io("http://localhost:3000");
 
     socket.current.on('draw', (paths) => {
