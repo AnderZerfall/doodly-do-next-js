@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
-import { ReactSketchCanvas } from "react-sketch-canvas";
+import { ReactSketchCanvas, ReactSketchCanvasRef, CanvasPath } from "react-sketch-canvas";
 import { io, Socket } from "socket.io-client";
 
 const styles = {
@@ -10,7 +10,7 @@ const styles = {
 
 export const Canvas = () => {
   const socket = useRef<Socket>(null);
-  const canvas = useRef<any>(null);
+  const canvas = useRef<ReactSketchCanvasRef>(null);
 
   useEffect(() => {
     // TODO: add fetch to synchronize data from specific board.
@@ -30,7 +30,7 @@ export const Canvas = () => {
     };
   }, []);
 
-  const updateDrawings = useCallback((paths) => {
+  const updateDrawings = useCallback((paths: CanvasPath) => {
     if (socket.current) {
       socket.current.emit('draw', paths);
     }
