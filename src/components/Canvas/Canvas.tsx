@@ -41,7 +41,7 @@ export const Canvas = () => {
       ref={canvas}
       style={styles}
       width="600"
-      height="400"
+      height="800"
       strokeWidth={4}
       strokeColor="red"
       onStroke={(paths) => updateDrawings(paths)}
