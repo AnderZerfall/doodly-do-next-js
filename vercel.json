@@ -19,8 +19,5 @@
       "src": "/(.*)",
       "dest": ".next/$1"
     }
-  ],
-  "env": {
-    "REDIS_URL": "@redis_url"
-  }
+  ]
 }
