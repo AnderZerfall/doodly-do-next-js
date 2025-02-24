@@ -1,5 +1,5 @@
 import { firestore } from "./firebase";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 export const saveDrawings = async (paths) => {
     console.log("FIRESTORE SAVE");

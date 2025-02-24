@@ -1,10 +1,9 @@
 "use client";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef, CanvasPath } from "react-sketch-canvas";
 // import { io, Socket } from "socket.io-client";
-import { getDrawings, saveDrawings } from '../../utils/drawings';
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
-import { collectMeta } from "next/dist/build/utils";
+import { saveDrawings } from '../../utils/drawings';
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { firestore } from "utils/firebase";
 
 const styles = {
