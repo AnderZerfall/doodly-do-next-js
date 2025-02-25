@@ -14,10 +14,10 @@ import { useBrushSize } from "hooks/useBrushSize";
 import { useEraserMode } from "hooks/useEraseMode";
 import { Button } from "@components/Button/Button";
 
-import "./Canvas.scss";
+import styles from "./Canvas.module.scss";
 import { useTheme } from "hooks/useTheme";
 
-const styles = {
+const canvasStyles = {
   overflow: 'hidden',
   borderRadius: "32px",
 };
@@ -91,7 +91,7 @@ export const Canvas = () => {
 
   return (
     <>
-      <div className="canvas__actions">
+      <div className={styles['canvas__actions']}>
         <Button
           handleClick={handleSaveBoard}
           icon="/icons/save.svg"
@@ -106,7 +106,7 @@ export const Canvas = () => {
 
       <ReactSketchCanvas
         ref={canvas}
-        style={styles}
+        style={canvasStyles}
         canvasColor={theme.secondaryBg}
         className="canvas"
         strokeWidth={brushSize}

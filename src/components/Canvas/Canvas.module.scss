@@ -7,3 +7,8 @@
         right: variables.$big-margin;
         gap: variables.$margin;
 }
+
+.canvas {
+    overflow: hidden;
+    border-radius: 32px;
+}
