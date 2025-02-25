@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useCallback, useMemo, useState } from "react";
 import { registerUser } from "utils/registry";
-import '../styles/Home.scss';
+// import '../styles/Home.scss';
 import Image from "next/image";
 import { Button } from "@components/Button/Button";
 import { useTheme } from "hooks/useTheme";

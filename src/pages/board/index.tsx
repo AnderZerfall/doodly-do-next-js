@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { auth } from "utils/firebase";
 
-import '../../styles/Board.scss';
+// import '../../styles/Board.scss';
 
 export default function BoardPage() {
   const [user, setUser] = useState<User | null>(null);
