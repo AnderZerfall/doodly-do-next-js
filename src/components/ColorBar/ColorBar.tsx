@@ -1,6 +1,6 @@
 import { ColorPicker } from "@components/ColorPicker/ColorPicker";
 import { PredefinedColors } from "../../utils/boardSettings/boardSettings";
-import "./ColorBar.scss";
+import styles from "./ColorBar.module.scss";
 import { useMemo } from "react";
 
 export const ColorBar = () => {
@@ -11,7 +11,7 @@ export const ColorBar = () => {
   }, []);
 
   return (
-    <div className="color-bar">
+      <div className={styles['color-bar']}>
       {populateColorBar}
     </div>
   );

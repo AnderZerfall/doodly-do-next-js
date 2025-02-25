@@ -1,5 +1,5 @@
 import Image from "next/image";
-import './Buttons.scss';
+import styles from './Buttons.module.scss';
 
 interface Props {
     icon?: string;
@@ -10,10 +10,13 @@ interface Props {
 }
 
 export const Button: React.FC<Props> = ({ icon, handleClick, className, type, text }) => {
+    const buttonClass = className ? `${styles.button} ${styles['button--icon']}` : styles.button
+    
     return (
         <button
+            // styles={styles.button}
             onClick={handleClick}
-            className={`button ${className}`}
+            className={buttonClass}
             type={type}
         >
             {icon && (

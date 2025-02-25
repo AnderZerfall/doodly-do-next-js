@@ -1,7 +1,7 @@
 import { useBrushSize } from "hooks/useBrushSize";
 import { useCallback } from "react";
 
-import './SizeRange.scss';
+import styles from './SizeRange.module.scss';
 
 export const SizeRange = () => {
   const { brushSize, setBrushSize } = useBrushSize();
@@ -14,7 +14,7 @@ export const SizeRange = () => {
 
   return (
       <input
-        className="range"
+        className={styles.rangeContainer}
       type="range"
       min={1}
       max={5}

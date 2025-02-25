@@ -6,7 +6,7 @@ interface Props {
     customColor?: boolean;
 }
 
-import './ColorPicker.scss';
+import styles from './ColorPicker.module.scss';
 import { useEraserMode } from "hooks/useEraseMode";
 
 export const ColorPicker: React.FC<Props> = ({ color }) => {
@@ -23,7 +23,7 @@ export const ColorPicker: React.FC<Props> = ({ color }) => {
 
     return (
         <div
-            className="color-picker"
+            className={styles['color-picker']}
             style={{ background: color }}
             onClick={handleColorSelection}
         >

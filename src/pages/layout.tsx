@@ -19,7 +19,7 @@ export const RootLayout = ({ children }: { children: React.ReactNode }) => {
         '--hover-primary': theme.hoverPrimary,
       } as React.CSSProperties}>
       <header className="wrapper__header header">
-        <Button handleClick={changeTheme} icon='/icons/moon.svg' className='button__theme button--icon'></Button>
+        <Button handleClick={changeTheme} icon='/icons/moon.svg' className='button--icon'></Button>
         </header>
         <main className="wrapper__main main">
           {children}
