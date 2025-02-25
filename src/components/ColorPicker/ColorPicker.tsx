@@ -9,7 +9,7 @@ interface Props {
 import './ColorPicker.scss';
 import { useEraserMode } from "hooks/useEraseMode";
 
-export const ColorPicker: React.FC<Props> = ({ color, customColor }) => {
+export const ColorPicker: React.FC<Props> = ({ color }) => {
     const { selectedColor, setSelectedColor } = useColors();
     const { setEraseMode } = useEraserMode();
 

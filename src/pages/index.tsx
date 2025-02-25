@@ -17,12 +17,12 @@ export default function HomePage() {
     return theme.themeTitle === 'light' ? '/images/DOODLYDO_light.svg' : '/images/DOODLYDO.svg'
   }, [theme]);
 
-  const handleLogIn = async (event: React.FormEvent) => {
+  const handleLogIn = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
     registerUser(nickname)
-        .then(() => router.push('/board'))
-        .catch((error) => error.message);
-  }
+      .then(() => router.push('/board'))
+      .catch((error) => error.message);
+  }, [nickname, router]);
   
   return (
     <div className="home-page page">

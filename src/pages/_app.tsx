@@ -2,7 +2,9 @@ import { ThemeProvider } from 'context/ThemeContext';
 import '../styles/global.scss';
 import { RootLayout } from './layout';
 
-function MyApp({ Component, pageProps }) {
+import { AppProps } from 'next/app';
+
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
     <RootLayout>
