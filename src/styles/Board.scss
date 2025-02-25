@@ -1,0 +1,36 @@
+@use "./variables.scss" as variables;
+
+.board-page {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  height: 100%;
+
+
+  &__settings {
+    position: fixed;
+    bottom: variables.$button-height;
+  }
+
+  &__tools {
+    display: flex;
+    gap: variables.$margin;
+  }
+
+  &__user-title {
+    color: var(--text);
+  }
+
+//   &__actions {
+//     display: flex;
+//     position: fixed;
+//     top: variables.$button-height;
+//     right: variables.$button-height;
+//     gap: variables.$margin;
+//   }
+}
+
+// .canvas {
+//      border-radius: variables.$big-border-radius;
+//  }

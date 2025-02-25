@@ -1,88 +1,119 @@
 "use client";
+
 import { useEffect, useRef } from "react";
-import { ReactSketchCanvas, ReactSketchCanvasRef, CanvasPath } from "react-sketch-canvas";
-// import { io, Socket } from "socket.io-client";
-import { saveDrawings } from '../../utils/drawings';
+import {
+  ReactSketchCanvas,
+  ReactSketchCanvasRef,
+  CanvasPath,
+} from "react-sketch-canvas";
+import { deleteDrawings, saveDrawings } from "../../utils/drawings";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { firestore } from "utils/firebase";
+import { useColors } from "hooks/useColors";
+import { useBrushSize } from "hooks/useBrushSize";
+import { useEraserMode } from "hooks/useEraseMode";
+import { Button } from "@components/Button/Button";
+
+import "./Canvas.scss";
+import { useTheme } from "hooks/useTheme";
 
 const styles = {
-  border: "0.0625rem solid #9c9c9c",
-  borderRadius: "0.25rem",
+  overflow: 'hidden',
+  borderRadius: "32px",
 };
 
 export const Canvas = () => {
-  // const socket = useRef<Socket>(null);
   const canvas = useRef<ReactSketchCanvasRef>(null);
+  const { selectedColor } = useColors();
+  const { brushSize } = useBrushSize();
+  const { eraseMode } = useEraserMode();
+  const { theme } = useTheme();
 
   useEffect(() => {
-    const pathsRef = query(collection(firestore, 'drawings'));
+    const pathsRef = query(collection(firestore, "drawings"));
 
-     const unsubscribe = onSnapshot(pathsRef, (snapshot) => {
-       const addedPaths: CanvasPath[] = [];
-       const removedPaths: CanvasPath[] = [];
-
-       const allPaths: CanvasPath[] = snapshot.docs.map(doc => doc.data() as CanvasPath);
+    const unsubscribe = onSnapshot(pathsRef, (snapshot) => {
+      const addedPaths: CanvasPath[] = [];
+      const removedPaths: CanvasPath[] = [];
 
       snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-          addedPaths.push(change.doc.data() as CanvasPath);
-        }
-        if (change.type === "removed") {
-          console.log('found removed');
-          removedPaths.push(change.doc.data() as CanvasPath);
+        switch (change.type) {
+          case "added":
+            addedPaths.push(change.doc.data() as CanvasPath);
+            break;
+          case "removed":
+            removedPaths.push(change.doc.data() as CanvasPath);
+            break;
         }
       });
 
-       if (canvas.current) {
-         
-         if (!!removedPaths.length) {
-           console.log('ready to clear canvas');
-           console.log(allPaths);
-            canvas.current.clearCanvas();
-            canvas.current.loadPaths(allPaths);
-         } else {
-            canvas.current.loadPaths(addedPaths);
-         }
+      const sortedPaths = addedPaths.toSorted(
+        (pathA, pathB) => Number(pathB.drawMode) - Number(pathA.drawMode)
+      );
+      if (canvas.current) {
+        if (!!removedPaths.length) {
+          canvas.current.clearCanvas();
+        }
 
-         
-       }
-     });
-    
+        canvas.current.loadPaths(sortedPaths);
+      }
+    });
+
     return () => unsubscribe();
-
-    
-    // socket.current = io("http://localhost:3000");
-
-    // socket.current.on('draw', (paths) => {
-    //   if (canvas.current) {
-    //     console.log('paths loaded')
-    //     canvas.current.loadPaths(paths);
-    //   }
-    // });
-
-    // return () => {
-    //   if (socket.current) {
-    //     socket.current.disconnect();
-    //   }
-    // };
   }, []);
 
-  // const updateDrawings = useCallback((paths: CanvasPath) => {
-  //   // if (socket.current) {
-  //   //   socket.current.emit('draw', paths);
-  //   // }
-  // }, []);
-    
+  useEffect(() => {
+    if (canvas.current) {
+      canvas.current.eraseMode(eraseMode);
+    }
+  }, [eraseMode]);
+
+  const handleResetBoard = async () => {
+    if (canvas.current) {
+      await deleteDrawings();
+    }
+  };
+
+  const handleSaveBoard = async () => {
+    if (canvas.current) {
+      const image = await canvas.current.exportImage("png");
+
+      if (image) {
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = "sketch.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
+
   return (
-    <ReactSketchCanvas
-      ref={canvas}
-      style={styles}
-      width="600"
-      height="800"
-      strokeWidth={4}
-      strokeColor="red"
-      onStroke={(paths) => saveDrawings(paths)}
-    />
+    <>
+      <div className="canvas__actions">
+        <Button
+          handleClick={handleSaveBoard}
+          icon="/icons/save.svg"
+          className="button--icon"
+        />
+        <Button
+          handleClick={handleResetBoard}
+          icon="/icons/reset.svg"
+          className="button--icon"
+        />
+      </div>
+
+      <ReactSketchCanvas
+        ref={canvas}
+        style={styles}
+        canvasColor={theme.secondaryBg}
+        className="canvas"
+        strokeWidth={brushSize}
+        strokeColor={selectedColor}
+        onStroke={(paths) => saveDrawings(paths)}
+        eraserWidth={brushSize}
+      />
+    </>
   );
 };

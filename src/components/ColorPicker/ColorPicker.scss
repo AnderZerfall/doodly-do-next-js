@@ -1,0 +1,14 @@
+@use '../../styles/variables.scss' as variables;
+
+.color-picker {
+    width: variables.$color-size;
+    height: variables.$color-size;
+    border: variables.$border-thickness var(--border) solid;
+    border-radius: 100%;
+    transition: all 200ms ease;
+
+    &:hover {
+        transform: scale(1.2);
+        border: variables.$border-thickness var(--primary) solid;
+    }
+}

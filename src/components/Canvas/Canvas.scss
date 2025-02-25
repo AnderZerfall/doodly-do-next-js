@@ -1,0 +1,9 @@
+@use '../../styles/variables.scss' as variables;
+
+.canvas__actions {
+    display: flex;
+        position: fixed;
+        top: variables.$big-margin;
+        right: variables.$big-margin;
+        gap: variables.$margin;
+}

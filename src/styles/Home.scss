@@ -1,0 +1,14 @@
+@use "./variables.scss" as variables;
+
+.home-page {
+  &__title {
+    margin-bottom: variables.$big-margin;
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: variables.$margin;
+  }
+}
