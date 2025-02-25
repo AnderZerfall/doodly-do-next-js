@@ -3,7 +3,7 @@
 import { Button } from "@components/Button/Button";
 import { useTheme } from "hooks/useTheme";
 
-export const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export default function RootLayout ({ children }: { children: React.ReactNode }) {
   const { theme, changeTheme } = useTheme();
   
   return (

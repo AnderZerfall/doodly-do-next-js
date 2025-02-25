@@ -2,7 +2,7 @@ import { ThemeProvider } from 'context/ThemeContext';
 import '../styles/global.scss';
 import '../styles/Home.scss';
 import '../styles/Board.scss';
-import { RootLayout } from './layout';
+import RootLayout from './layout';
 
 import { AppProps } from 'next/app';
 
