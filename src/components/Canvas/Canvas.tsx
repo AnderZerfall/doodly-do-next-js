@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import {
   ReactSketchCanvas,
   ReactSketchCanvasRef,
-  CanvasPath,
+  // CanvasPath,
 } from "react-sketch-canvas";
 import { deleteDrawings, saveDrawings } from "../../utils/drawings";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { doc, onSnapshot} from "firebase/firestore";
 import { firestore } from "utils/firebase";
 import { useColors } from "hooks/useColors";
 import { useBrushSize } from "hooks/useBrushSize";
@@ -30,33 +30,43 @@ export const Canvas = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const pathsRef = query(collection(firestore, "drawings"));
+    const pathsRef = doc(firestore, "drawings", "board");
 
     const unsubscribe = onSnapshot(pathsRef, (snapshot) => {
-      const addedPaths: CanvasPath[] = [];
-      const removedPaths: CanvasPath[] = [];
+      // const addedPaths: CanvasPath[] = [];
+      // const removedPaths: CanvasPath[] = [];
 
-      snapshot.docChanges().forEach((change) => {
-        switch (change.type) {
-          case "added":
-            addedPaths.push(change.doc.data() as CanvasPath);
-            break;
-          case "removed":
-            removedPaths.push(change.doc.data() as CanvasPath);
-            break;
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+
+        if (canvas.current) {
+          if (!data.length) {
+            canvas.current.clearCanvas();
+          }
+          canvas.current.loadPaths(data.paths);
         }
-      });
-
-      const sortedPaths = addedPaths.toSorted(
-        (pathA, pathB) => Number(pathB.drawMode) - Number(pathA.drawMode)
-      );
-      if (canvas.current) {
-        if (!!removedPaths.length) {
-          canvas.current.clearCanvas();
-        }
-
-        canvas.current.loadPaths(sortedPaths);
       }
+
+      // snapshot.docChanges().forEach((change) => {
+      //   switch (change.type) {
+      //     case "added":
+      //       addedPaths.push(change.doc.data() as CanvasPath);
+      //       break;
+      //     case "removed":
+      //       removedPaths.push(change.doc.data() as CanvasPath);
+      //       break;
+      //   }
+      // });
+
+      // if (canvas.current) {
+      //   if (!!removedPaths.length) {
+      //     canvas.current.clearCanvas();
+      //   }
+
+      //   if (!!addedPaths.length) {
+      //     canvas.current.loadPaths(addedPaths);
+      //   }
+      // }
     });
 
     return () => unsubscribe();
