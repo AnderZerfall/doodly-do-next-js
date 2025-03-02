@@ -13,6 +13,7 @@ export const ColorBar = () => {
   return (
       <div className={styles['color-bar']}>
       {populateColorBar}
+      <ColorPicker color={''} IsCustomColor />
     </div>
   );
 };

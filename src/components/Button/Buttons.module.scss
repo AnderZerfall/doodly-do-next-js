@@ -4,22 +4,26 @@
   border-radius: variables.$border-radius;
   height: variables.$button-height;
   background: var(--primary);
-    color: white;
-    font-weight: 600;
-    transition: all 200ms ease;
+  color: white;
+  font-weight: 600;
+  transition: all 200ms ease;
 
   &:hover {
     background: var(--hover-primary);
     transform: scale(1.05);
   }
 
-        &--icon {
-            width: variables.$button-height;
-            background: var(--interactive-bg);
-            
-            &:hover {
-                transform: scale(1.1);
-                background: var(--hover-bg);
-            }
-        }
+  &--icon {
+    width: variables.$button-height;
+    background: var(--interactive-bg);
+
+    &:hover {
+      transform: scale(1.1);
+      background: var(--hover-bg);
+    }
+  }
+
+  &--active {
+    background: var(--hover-bg);
+  }
 }

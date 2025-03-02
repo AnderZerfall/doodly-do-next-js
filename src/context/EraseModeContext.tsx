@@ -1,18 +1,24 @@
 import { createContext, useState } from "react";
 
 export interface EraseModeContextType {
-    eraseMode: boolean;
-    setEraseMode: (status: boolean) => void;
+  eraseMode: boolean;
+  setEraseMode: (status: boolean) => void;
 }
 
-export const EraseModeContext = createContext<EraseModeContextType | null>(null);
+export const EraseModeContext = createContext<EraseModeContextType | null>(
+  null
+);
 
-export const EraseModeProvider = ({ children }: { children: React.ReactNode }) => {
-    const [eraseMode, setEraseMode ] = useState(false);
+export const EraseModeProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [eraseMode, setEraseMode] = useState(false);
 
   return (
-      <EraseModeContext.Provider value={{ eraseMode, setEraseMode }}>
-          {children}
-      </EraseModeContext.Provider>
+    <EraseModeContext.Provider value={{ eraseMode, setEraseMode }}>
+      {children}
+    </EraseModeContext.Provider>
   );
 };

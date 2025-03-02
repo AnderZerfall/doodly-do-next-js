@@ -1,27 +1,32 @@
-@use '../../styles/variables.scss' as variables;
+@use "../../styles/variables.scss" as variables;
 
 .canvas__actions {
-    display: flex;
-        position: fixed;
-        top: variables.$big-margin;
-        right: variables.$big-margin;
-        gap: variables.$margin;
+  display: flex;
+  position: fixed;
+  top: variables.$big-margin;
+  right: variables.$big-margin;
+  gap: variables.$margin;
 }
 
 .canvas {
+  width: 100%;
+  height: 100%;
+//   overflow: hidden;
+  border-radius: 32px;
+
+  &__area {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 32px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
-
-    &__area {
-        overflow: hidden;
-        border-radius: 32px;
-        width: 100%;
-        height: 100%;
-    }
    
-
-    &__wrapper {
-        width: 100%;
-        height: 100%;
-    }
+    border-radius: 32px;
+  }
 }

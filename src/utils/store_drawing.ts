@@ -26,8 +26,8 @@ export const subscribeToDrawEvent = (action: (paths: CanvasPath[]) => void) => {
       const data = snapshot.data();
       const paths = data.paths || [];
 
-      console.log(paths);
       const decompressedPath = decompressData(paths);
+      console.log('decompressed');
       console.log(decompressedPath);
 
       decompressedPath.sort(
@@ -79,6 +79,44 @@ export const deleteDrawings = async () => {
   }
 };
 
+export const deleteLastDoc = async (userId: string) => {
+  const boardRef = await InitializeBoard();
+
+  try {
+    const docSnap = await getDoc(boardRef);
+    const data = docSnap.data();
+
+    if (data) {
+
+      const decompressedPaths = decompressData(data.paths);
+
+      const userPaths = decompressedPaths.filter(path => path.userId === userId);
+
+      userPaths.sort((pathA: SavedPath, pathB: SavedPath) =>
+      pathA.timestamp.seconds - pathB.timestamp.seconds);
+
+      console.log('UserPaths');
+      console.log(userPaths);
+
+      const updatedPaths = decompressedPaths.filter((path: SavedPath) =>
+        path.pathId !== userPaths[userPaths.length - 1].pathId);
+
+
+       const compressedPaths = updatedPaths.map(path => compressData(path))
+      // const compressedPaths = compressData(updatedPaths);
+
+      await updateDoc(boardRef, {
+        paths: compressedPaths,
+        lastModified: Timestamp.now(),
+      });
+    }
+  } catch (error) {
+    console.debug("Error deleting the stroke: ", error);
+    throw error;
+  }
+};
+
+
 const InitializeBoard = async () => {
   const boardRef = doc(firestore, "drawings", "board");
 
@@ -108,10 +146,24 @@ const compressData = (path: SavedPath) => {
   }
 };
 
-const decompressData = (pathString: string[]) => {
+// const compressData = (path: SavedPath[]) => {
+//   try {
+//     return path.map(path => {
+//       const pathString = JSON.stringify(path);
+//       return LZString.compressToUTF16(pathString)
+//     });
+//   } catch (error) {
+//     console.debug("Unable to compress the data: ", error);
+//   }
+
+//   return [];
+// };
+
+const decompressData = (pathString: string[]): SavedPath[] => {
   return pathString.map((path) => {
     try {
       const decompressedPath = LZString.decompressFromUTF16(path);
+      console.log(decompressedPath);
       return JSON.parse(decompressedPath);
     } catch (error) {
       console.debug("Unable to decompress the data: ", error);

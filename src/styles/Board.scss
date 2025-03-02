@@ -3,34 +3,29 @@
 .board-page {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
   height: 100%;
 
 
   &__settings {
     position: fixed;
     bottom: variables.$button-height;
+
+    @media (max-width: 454px) {
+        display: flex;
+        right: variables.$margin;
+      }
   }
 
   &__tools {
     display: flex;
     gap: variables.$margin;
+
+    @media (max-width: 454px) {
+        flex-direction: column;
+      }
   }
 
   &__user-title {
     color: var(--text);
   }
-
-//   &__actions {
-//     display: flex;
-//     position: fixed;
-//     top: variables.$button-height;
-//     right: variables.$button-height;
-//     gap: variables.$margin;
-//   }
 }
-
-// .canvas {
-//      border-radius: variables.$big-border-radius;
-//  }

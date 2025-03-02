@@ -3,10 +3,14 @@
 .color-bar {
     display: flex;
     background: var(--interactive-bg);
-    height: variables.$button-height;
     border-radius: variables.$border-radius;
     justify-content: center;
     align-items: center;
     gap: variables.$margin;
-    padding: 0 variables.$big-margin;
+    padding: variables.$margin;
+    box-sizing: border-box;
+
+    @media (max-width: 454px) {
+        flex-direction: column;
+    }
 }

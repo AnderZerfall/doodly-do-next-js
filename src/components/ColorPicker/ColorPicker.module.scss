@@ -1,14 +1,50 @@
-@use '../../styles/variables.scss' as variables;
+@use "../../styles/variables.scss" as variables;
 
 .color-picker {
-    width: variables.$color-size;
-    height: variables.$color-size;
-    border: variables.$border-thickness var(--border) solid;
-    border-radius: 100%;
-    transition: all 200ms ease;
+  width: variables.$color-size;
+  height: variables.$color-size;
+  border: variables.$border-thickness var(--border) solid;
+  border-radius: 100%;
+  transition: all 200ms ease;
 
-    &:hover {
-        transform: scale(1.2);
-        border: variables.$border-thickness var(--primary) solid;
+  &--custom {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    outline: none;
+    padding: 0;
+    box-sizing: content-box;
+
+    &:focus {
+      outline: none;
     }
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: 0;
+      border-radius: 0;
+    }
+
+    &::-moz-color-swatch,
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &::-moz-focus-inner {
+      padding: 0;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.2);
+    border: variables.$border-thickness var(--primary) solid;
+  }
+
+  &--active {
+    border: variables.$border-thickness var(--primary) solid;
+  }
 }

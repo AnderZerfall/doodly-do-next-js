@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect,useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ReactSketchCanvas,
   ReactSketchCanvasRef,
@@ -8,6 +8,7 @@ import {
 } from "react-sketch-canvas";
 import {
   deleteDrawings,
+  deleteLastDoc,
   saveDrawings,
   subscribeToDrawEvent,
 } from "../../utils/store_drawing";
@@ -16,6 +17,7 @@ import { useBrushSize } from "hooks/useBrushSize";
 import { useEraserMode } from "hooks/useEraseMode";
 import { Button } from "@components/Button/Button";
 import styles from "./Canvas.module.scss";
+import { useHotkeys } from "react-hotkeys-hook";
 import { useTheme } from "hooks/useTheme";
 
 const canvasStyles = {
@@ -35,28 +37,55 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
   const { eraseMode } = useEraserMode();
   const { theme } = useTheme();
   const [isDrawing, setIsDrawing] = useState(false);
+  const [scale, setScale] = useState(1);
 
-  const handleDrawing = () => {
+  const handleUndo = () => {
+    if (canvas.current) {
+      deleteLastDoc(userId);
+    }
+  };
+
+  useHotkeys("ctrl+z", handleUndo, [], [canvas]);
+
+  const handleZoom = useCallback(
+    (event) => {
+      event.preventDefault();
+      const newScale = scale + event.deltaY * -0.001;
+      setScale(Math.min(Math.max(newScale, 0.5), 3));
+    },
+    [scale]
+  );
+
+  const handleDrawing = useCallback(() => {
     setIsDrawing(true);
-  };
-  const handleStopDrawing = () => {
+  }, []);
+  const handleStopDrawing = useCallback(() => {
     setIsDrawing(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (canvasWrapper.current) {
       const wrapper = canvasWrapper.current;
 
       wrapper.addEventListener("mousedown", handleDrawing);
-
+      wrapper.addEventListener("mousewheel", handleZoom);
       wrapper.addEventListener("mouseup", handleStopDrawing);
 
       return () => {
         wrapper.removeEventListener("mousedown", handleDrawing);
         wrapper.removeEventListener("mouseup", handleStopDrawing);
+        wrapper.removeEventListener("mousewheel", handleZoom);
       };
     }
-  }, []);
+  }, [handleZoom, handleDrawing, handleStopDrawing]);
+
+  // useEffect(() => {
+  //   if (canvasWrapper.current) {
+  //     // const context = canvasWrapper.current.getContext('2d');
+  //     // canvasWrapper.current.setTransform(scale, 0, 0, scale, 0, 0);
+  //     canvasWrapper.current.style.transform = `scale(${scale})`;
+  //   }
+  // }, [scale]);
 
   useEffect(() => {
     const unsubscribe = subscribeToDrawEvent(async (paths) => {
@@ -103,31 +132,27 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
     <>
       <div className={styles.canvas}>
         <div className={styles["canvas__actions"]}>
-        <Button
-          handleClick={handleSaveBoard}
-          icon="/icons/save.svg"
-          className="button--icon"
-        />
-        <Button
-          handleClick={handleResetBoard}
-          icon="/icons/reset.svg"
-          className="button--icon"
-        />
+          <Button handleClick={handleSaveBoard} icon="/icons/save.svg" isIcon />
+          <Button
+            handleClick={handleResetBoard}
+            icon="/icons/reset.svg"
+            isIcon
+          />
+        </div>
+        <div className={styles["canvas__wrapper"]} ref={canvasWrapper}>
+          <ReactSketchCanvas
+            ref={canvas}
+            style={canvasStyles}
+            canvasColor={theme.secondaryBg}
+            className={styles["canvas__area"]}
+            strokeWidth={brushSize}
+            strokeColor={selectedColor}
+            onStroke={(path: CanvasPath) => saveDrawings(path, userId)}
+            eraserWidth={brushSize}
+            width="4000"
+          />
+        </div>
       </div>
-      <div className={styles["canvas__wrapper"]} ref={canvasWrapper}>
-        <ReactSketchCanvas
-          ref={canvas}
-          style={canvasStyles}
-          canvasColor={theme.secondaryBg}
-          className={styles["canvas__area"]}
-          strokeWidth={brushSize}
-          strokeColor={selectedColor}
-          onStroke={(path: CanvasPath) => saveDrawings(path, userId)}
-          eraserWidth={brushSize}
-        />
-      </div>
-      </div>
-      
     </>
   );
 };
