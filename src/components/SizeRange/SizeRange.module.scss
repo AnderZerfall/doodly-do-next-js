@@ -29,8 +29,7 @@
     &:focus {
       outline: none;
     }
-
-    // Track styles
+    
     &::-webkit-slider-runnable-track {
       width: 100%;
       height: variables.$margin;

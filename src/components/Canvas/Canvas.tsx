@@ -48,7 +48,7 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
   useHotkeys("ctrl+z", handleUndo, [], [canvas]);
 
   const handleZoom = useCallback(
-    (event) => {
+    (event: WheelEvent) => {
       event.preventDefault();
       const newScale = scale + event.deltaY * -0.001;
       setScale(Math.min(Math.max(newScale, 0.5), 3));
@@ -68,24 +68,16 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
       const wrapper = canvasWrapper.current;
 
       wrapper.addEventListener("mousedown", handleDrawing);
-      wrapper.addEventListener("mousewheel", handleZoom);
+      wrapper.addEventListener("wheel", (event: WheelEvent) => handleZoom(event));
       wrapper.addEventListener("mouseup", handleStopDrawing);
 
       return () => {
         wrapper.removeEventListener("mousedown", handleDrawing);
         wrapper.removeEventListener("mouseup", handleStopDrawing);
-        wrapper.removeEventListener("mousewheel", handleZoom);
+        wrapper.removeEventListener("wheel", (event: WheelEvent) => handleZoom(event));
       };
     }
   }, [handleZoom, handleDrawing, handleStopDrawing]);
-
-  // useEffect(() => {
-  //   if (canvasWrapper.current) {
-  //     // const context = canvasWrapper.current.getContext('2d');
-  //     // canvasWrapper.current.setTransform(scale, 0, 0, scale, 0, 0);
-  //     canvasWrapper.current.style.transform = `scale(${scale})`;
-  //   }
-  // }, [scale]);
 
   useEffect(() => {
     const unsubscribe = subscribeToDrawEvent(async (paths) => {
