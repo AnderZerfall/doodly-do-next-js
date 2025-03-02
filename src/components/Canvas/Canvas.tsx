@@ -37,24 +37,14 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
   const { eraseMode } = useEraserMode();
   const { theme } = useTheme();
   const [isDrawing, setIsDrawing] = useState(false);
-  const [scale, setScale] = useState(1);
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     if (canvas.current) {
       deleteLastDoc(userId);
     }
-  };
+  }, [userId]);
 
   useHotkeys("ctrl+z", handleUndo, [], [canvas]);
-
-  const handleZoom = useCallback(
-    (event: WheelEvent) => {
-      event.preventDefault();
-      const newScale = scale + event.deltaY * -0.001;
-      setScale(Math.min(Math.max(newScale, 0.5), 3));
-    },
-    [scale]
-  );
 
   const handleDrawing = useCallback(() => {
     setIsDrawing(true);
@@ -68,16 +58,14 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
       const wrapper = canvasWrapper.current;
 
       wrapper.addEventListener("mousedown", handleDrawing);
-      wrapper.addEventListener("wheel", (event: WheelEvent) => handleZoom(event));
       wrapper.addEventListener("mouseup", handleStopDrawing);
 
       return () => {
         wrapper.removeEventListener("mousedown", handleDrawing);
         wrapper.removeEventListener("mouseup", handleStopDrawing);
-        wrapper.removeEventListener("wheel", (event: WheelEvent) => handleZoom(event));
       };
     }
-  }, [handleZoom, handleDrawing, handleStopDrawing]);
+  }, [handleDrawing, handleStopDrawing]);
 
   useEffect(() => {
     const unsubscribe = subscribeToDrawEvent(async (paths) => {

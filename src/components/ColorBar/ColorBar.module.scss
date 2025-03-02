@@ -1,16 +1,16 @@
-@use '../../styles/variables.scss' as variables;
+@use "../../styles/variables.scss" as variables;
 
 .color-bar {
-    display: flex;
-    background: var(--interactive-bg);
-    border-radius: variables.$border-radius;
-    justify-content: center;
-    align-items: center;
-    gap: variables.$margin;
-    padding: variables.$margin;
-    box-sizing: border-box;
+  display: flex;
+  background: var(--interactive-bg);
+  border-radius: variables.$border-radius;
+  justify-content: center;
+  align-items: center;
+  gap: variables.$margin;
+  padding: variables.$margin;
+  box-sizing: border-box;
 
-    @media (max-width: 454px) {
-        flex-direction: column;
-    }
+  @media (max-width: 454px) {
+    flex-direction: column;
+  }
 }

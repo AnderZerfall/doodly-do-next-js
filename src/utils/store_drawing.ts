@@ -27,7 +27,7 @@ export const subscribeToDrawEvent = (action: (paths: CanvasPath[]) => void) => {
       const paths = data.paths || [];
 
       const decompressedPath = decompressData(paths);
-      console.log('decompressed');
+      console.log("decompressed");
       console.log(decompressedPath);
 
       decompressedPath.sort(
@@ -87,23 +87,26 @@ export const deleteLastDoc = async (userId: string) => {
     const data = docSnap.data();
 
     if (data) {
-
       const decompressedPaths = decompressData(data.paths);
 
-      const userPaths = decompressedPaths.filter(path => path.userId === userId);
+      const userPaths = decompressedPaths.filter(
+        (path) => path.userId === userId
+      );
 
-      userPaths.sort((pathA: SavedPath, pathB: SavedPath) =>
-      pathA.timestamp.seconds - pathB.timestamp.seconds);
+      userPaths.sort(
+        (pathA: SavedPath, pathB: SavedPath) =>
+          pathA.timestamp.seconds - pathB.timestamp.seconds
+      );
 
-      console.log('UserPaths');
+      console.log("UserPaths");
       console.log(userPaths);
 
-      const updatedPaths = decompressedPaths.filter((path: SavedPath) =>
-        path.pathId !== userPaths[userPaths.length - 1].pathId);
+      const updatedPaths = decompressedPaths.filter(
+        (path: SavedPath) =>
+          path.pathId !== userPaths[userPaths.length - 1].pathId
+      );
 
-
-       const compressedPaths = updatedPaths.map(path => compressData(path))
-      // const compressedPaths = compressData(updatedPaths);
+      const compressedPaths = updatedPaths.map((path) => compressData(path));
 
       await updateDoc(boardRef, {
         paths: compressedPaths,
@@ -115,7 +118,6 @@ export const deleteLastDoc = async (userId: string) => {
     throw error;
   }
 };
-
 
 const InitializeBoard = async () => {
   const boardRef = doc(firestore, "drawings", "board");
@@ -170,27 +172,3 @@ const decompressData = (pathString: string[]): SavedPath[] => {
     }
   });
 };
-
-
-// export const SaveDrawingsLocally = (path: CanvasPath) => {
-//   const newPath = { id: uuidv4(), path };
-//   const rawPaths = localStorage.getItem('board');
-//   let paths = [];
-
-//   if (rawPaths) {
-//     paths = JSON.parse(rawPaths);
-//   }
-
-//   localStorage.setItem('board', JSON.stringify([...paths, newPath]));
-// }
-
-// export const GetDrawingsLocally = () => {
-//   const rawPaths = localStorage.getItem('board') || '';
-
-//   if (rawPaths) {
-//     const paths = JSON.parse(rawPaths);
-//     return paths.map(path => path.path);
-//   }
-
-//   return [];
-// }
