@@ -30,28 +30,29 @@ export default function BoardPage() {
     return () => unsubscribe();
   }, [router]);
 
-  console.log(`board ${user?.uid}`)
+  console.log(`board ${user?.uid}`);
 
   return (
-      <div className="board-page page">
-          <div className="board-page__container container">
-              <EraseModeProvider>
-        <BrushSizeProvider>
-          <ColorProvider>
-            <h3 className="board-page__user-title">Draw your things, {user?.displayName}!</h3>
-              <Canvas userId={user?.uid} />
-            <div className="board-page__settings">
-              <SizeRange />
-              <div className="board-page__tools">
-                <Eraser />
-                <ColorBar />
+    <div className="board-page page">
+      <div className="board-page__container container">
+        <EraseModeProvider>
+          <BrushSizeProvider>
+            <ColorProvider>
+              <h3 className="board-page__user-title">
+                Draw your things, {user?.displayName}!
+              </h3>
+              {user && <Canvas userId={user.uid} />}
+              <div className="board-page__settings">
+                <SizeRange />
+                <div className="board-page__tools">
+                  <Eraser />
+                  <ColorBar />
+                </div>
               </div>
-            </div>
-          </ColorProvider>
-        </BrushSizeProvider>
-      </EraseModeProvider>
-          </div>
-      
+            </ColorProvider>
+          </BrushSizeProvider>
+        </EraseModeProvider>
+      </div>
     </div>
   );
 }
