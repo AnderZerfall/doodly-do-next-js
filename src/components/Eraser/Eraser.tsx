@@ -14,6 +14,7 @@ export const Eraser = () => {
       handleClick={handleErase}
       icon="/icons/eraser.svg"
       isActive={eraseMode}
+      isIcon={true}
     />
   );
 };

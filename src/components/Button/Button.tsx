@@ -14,7 +14,7 @@ interface Props {
 export const Button: React.FC<Props> = ({
   icon,
   handleClick,
-  isIcon = true,
+  isIcon,
   isActive,
   type,
   text,
