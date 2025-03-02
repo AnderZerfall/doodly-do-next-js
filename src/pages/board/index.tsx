@@ -30,6 +30,8 @@ export default function BoardPage() {
     return () => unsubscribe();
   }, [router]);
 
+  console.log(`board ${user?.uid}`)
+
   return (
       <div className="board-page page">
           <div className="board-page__container container">
@@ -37,7 +39,7 @@ export default function BoardPage() {
         <BrushSizeProvider>
           <ColorProvider>
             <h3 className="board-page__user-title">Draw your things, {user?.displayName}!</h3>
-            <Canvas />
+              <Canvas userId={user?.uid} />
             <div className="board-page__settings">
               <SizeRange />
               <div className="board-page__tools">
