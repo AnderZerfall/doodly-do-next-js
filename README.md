@@ -1,8 +1,8 @@
 # DOODLY DO - Online Brainstorming app
 
-![](https://imgur.com/54GWa8Q.gif)
+![](https://imgur.com/hrVU4QT.gif)
 
-### See DEMO here: https://fukuro-kanban.netlify.app/
+### See DEMO here: https://doodly-do-next-js.vercel.app/
 
 Hello there! Hope you have a nice day!
 I'm Anna or Fukuro. and I'm happy to present to you what I've created!
@@ -16,6 +16,7 @@ Let's dive into more details.
 
 - **Real time updates**: Powered by Firebase
 - **Smooth animations**: To improve UI, I added small cute animations and loaders.
+- **Dark\Light theme**: Choose your side!
 - **State persisting between sessions**: You can create a temp anonymous account to sync your progress between sessions!
 - **Responsive design. Mobile first**: Displayed optimally both on mobiles and desktops
 - **Hand crafted design**: Minimalistic design fully made by me.
@@ -24,6 +25,9 @@ Let's dive into more details.
 - **Export to PNG**: Export your art pieces!
 - **CTRL+Z**: Did something wrong? okay, Just press CTRL+Z!
 - **Notifications**: if something goes wrong, you'll quickly find the core of the issue with small toast notifications!
+
+![](https://imgur.com/yFCJMBl.gif)
+![](https://imgur.com/SPZ0vBl.gif)
 
 ## Used Technologies
 - **Next js**: The core of our project
@@ -35,8 +39,6 @@ Let's dive into more details.
 - **Hot-toast**: toast notifications.
 - **Hot-keys**: for tracking hotkeys pressing.
 - **Vercel**: for automatic project deployment.
-
-![](https://imgur.com/VPkJIYP.png)
 
 ## How to run the project on your local machine?
 
