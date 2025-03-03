@@ -11,10 +11,10 @@
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-
     outline: none;
     padding: 0;
     box-sizing: content-box;
+    animation: rainbowAnimation 5s ease infinite;
 
     &:focus {
       outline: none;
@@ -46,5 +46,23 @@
 
   &--active {
     border: variables.$border-thickness var(--primary) solid;
+  }
+}
+
+@keyframes rainbowAnimation {
+  0% {
+    border-color: variables.$red;
+  }
+  25% {
+    border-color: variables.$yellow;
+  }
+  50% {
+    border-color: variables.$green;
+  }
+  75% {
+    border-color: variables.$blue;
+  }
+  100% {
+    border-color: variables.$violet;
   }
 }

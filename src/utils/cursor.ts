@@ -1,9 +1,6 @@
-import {
-  doc,
-  getDoc,
-  onSnapshot,
-  setDoc,
-} from "firebase/firestore";
+// TO DO: Implement cursor tracking
+
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { firestore } from "./firebase";
 
 export type CursorType = {
@@ -14,27 +11,21 @@ export type CursorType = {
 
 export const updateCursorsPosition = async (cords: CursorType) => {
   const cursorRef = await InitializeCursorStore();
-    console.log('start');
-    const cursorSnap = await getDoc(cursorRef);
-    console.log(cursorSnap);
+  const cursorSnap = await getDoc(cursorRef);
 
-     const data = cursorSnap.data();
-      console.log('data exist');
+  const data = cursorSnap.data();
 
-    if (data) {
-      const updatedData = data.cursors.filter(
-        (cursor: CursorType) => cursor.userId !== cords.userId
-        );
+  if (data) {
+    const updatedData = data.cursors.filter(
+      (cursor: CursorType) => cursor.userId !== cords.userId
+    );
 
-        console.log(updatedData);
-
-      await setDoc(cursorRef, {
-        cursors: [...updatedData, cords],
-      });
-    }
+    await setDoc(cursorRef, {
+      cursors: [...updatedData, cords],
+    });
+  }
 
   if (!cursorSnap.exists()) {
-     
   }
 };
 

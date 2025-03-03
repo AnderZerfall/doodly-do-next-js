@@ -11,7 +11,7 @@ import {
   deleteLastDoc,
   saveDrawings,
   subscribeToDrawEvent,
-} from "../../utils/store_drawing";
+} from "../../utils/board";
 import { useColors } from "hooks/useColors";
 import { useBrushSize } from "hooks/useBrushSize";
 import { useEraserMode } from "hooks/useEraseMode";
@@ -19,6 +19,7 @@ import { Button } from "@components/Button/Button";
 import styles from "./Canvas.module.scss";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTheme } from "hooks/useTheme";
+import toast from "react-hot-toast";
 
 const canvasStyles = {
   overflow: "hidden",
@@ -89,7 +90,11 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
 
   const handleResetBoard = async () => {
     if (canvas.current) {
-      await deleteDrawings();
+      try {
+         await deleteDrawings();
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -107,6 +112,14 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
       }
     }
   };
+
+  const handleOnStroke = (path: CanvasPath) => {
+    try {
+      saveDrawings(path, userId);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
 
   return (
     <>
@@ -127,7 +140,7 @@ export const Canvas: React.FC<Props> = ({ userId }) => {
             className={styles["canvas__area"]}
             strokeWidth={brushSize}
             strokeColor={selectedColor}
-            onStroke={(path: CanvasPath) => saveDrawings(path, userId)}
+            onStroke={(path: CanvasPath) => handleOnStroke(path)}
             eraserWidth={brushSize}
             width="4000"
           />

@@ -2,6 +2,7 @@
 
 import { Button } from "@components/Button/Button";
 import { useTheme } from "hooks/useTheme";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout ({ children }: { children: React.ReactNode }) {
   const { theme, changeTheme } = useTheme();
@@ -21,7 +22,8 @@ export default function RootLayout ({ children }: { children: React.ReactNode })
       <header className="wrapper__header header">
         <Button handleClick={changeTheme} icon='/icons/moon.svg' isIcon></Button>
         </header>
-        <main className="wrapper__main main">
+      <main className="wrapper__main main">
+         <Toaster position="bottom-center" />
           {children}
         </main>
         <footer className="wrapper__footer footer">

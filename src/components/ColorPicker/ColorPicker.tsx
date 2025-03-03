@@ -13,7 +13,7 @@ import classNames from "classnames";
 export const ColorPicker: React.FC<Props> = ({ color, IsCustomColor }) => {
   const { selectedColor, setSelectedColor } = useColors();
   const { setEraseMode } = useEraserMode();
-  const [customColor, setCustomColor] = useState("");
+  const [customColor, setCustomColor] = useState('');
 
   const handleColorSelection = useCallback(
     (customColor = "") => {
@@ -35,7 +35,7 @@ export const ColorPicker: React.FC<Props> = ({ color, IsCustomColor }) => {
   );
 
   return IsCustomColor ? (
-    <input
+      <input
       type="color"
       className={classNames(styles["color-picker"], styles["color-picker--custom"], {
         [styles["color-picker--active"]]: selectedColor === customColor,
@@ -44,6 +44,7 @@ export const ColorPicker: React.FC<Props> = ({ color, IsCustomColor }) => {
       onClick={(event) => handleColorSelection((event.target as HTMLInputElement).value)}
       onChange={(event) => handleColorSelection(event.target.value)}
     />
+   
   ) : (
     <div
       className={classNames(styles["color-picker"], {

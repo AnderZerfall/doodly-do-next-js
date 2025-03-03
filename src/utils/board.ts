@@ -52,13 +52,12 @@ export const saveDrawings = async (path: CanvasPath, userId: string) => {
     timestamp: Timestamp.now(),
   };
 
-  const compressedPath = compressData(newPath);
+  const compressedPath = compressData([newPath]);
 
   try {
     await updateDoc(boardRef, {
-      paths: arrayUnion(compressedPath),
+      paths: arrayUnion(...compressedPath),
     });
-    console.log("Path saved");
   } catch (error) {
     console.debug("Error saving the stroke: ", error);
     throw error;
@@ -98,15 +97,12 @@ export const deleteLastDoc = async (userId: string) => {
           pathA.timestamp.seconds - pathB.timestamp.seconds
       );
 
-      console.log("UserPaths");
-      console.log(userPaths);
-
       const updatedPaths = decompressedPaths.filter(
         (path: SavedPath) =>
           path.pathId !== userPaths[userPaths.length - 1].pathId
       );
 
-      const compressedPaths = updatedPaths.map((path) => compressData(path));
+      const compressedPaths = compressData(updatedPaths);
 
       await updateDoc(boardRef, {
         paths: compressedPaths,
@@ -139,33 +135,24 @@ const InitializeBoard = async () => {
   }
 };
 
-const compressData = (path: SavedPath) => {
+const compressData = (path: SavedPath[]) => {
   try {
-    const pathString = JSON.stringify(path);
-    return LZString.compressToUTF16(pathString);
+    return path.map(path => {
+      const pathString = JSON.stringify(path);
+      return LZString.compressToUTF16(pathString)
+    });
   } catch (error) {
     console.debug("Unable to compress the data: ", error);
   }
+
+  return [];
 };
-
-// const compressData = (path: SavedPath[]) => {
-//   try {
-//     return path.map(path => {
-//       const pathString = JSON.stringify(path);
-//       return LZString.compressToUTF16(pathString)
-//     });
-//   } catch (error) {
-//     console.debug("Unable to compress the data: ", error);
-//   }
-
-//   return [];
-// };
 
 const decompressData = (pathString: string[]): SavedPath[] => {
   return pathString.map((path) => {
     try {
       const decompressedPath = LZString.decompressFromUTF16(path);
-      console.log(decompressedPath);
+
       return JSON.parse(decompressedPath);
     } catch (error) {
       console.debug("Unable to decompress the data: ", error);

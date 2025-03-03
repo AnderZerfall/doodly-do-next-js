@@ -23,6 +23,12 @@
     }
   }
 
+  &__icon {
+    &--light {
+      filter: sepia(100%) saturate(200%) hue-rotate(180deg);
+    }
+  }
+
   &--active {
     background: var(--hover-bg);
   }

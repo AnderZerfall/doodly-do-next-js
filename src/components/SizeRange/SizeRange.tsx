@@ -1,5 +1,6 @@
 import { useBrushSize } from "hooks/useBrushSize";
 import { useCallback } from "react";
+import { MIN_BRUSH_SIZE, MAX_BRUSH_SIZE } from "utils/boardSettings/boardSettings";
 
 import styles from "./SizeRange.module.scss";
 
@@ -20,8 +21,8 @@ export const SizeRange = () => {
       <input
         className={styles["size-range__item"]}
         type="range"
-        min={1}
-        max={5}
+        min={MIN_BRUSH_SIZE}
+        max={MAX_BRUSH_SIZE}
         onChange={(e) => handleChangeBrushSize(+e.target.value)}
       />
     </div>

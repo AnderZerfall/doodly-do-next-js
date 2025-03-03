@@ -6,3 +6,6 @@ export enum PredefinedColors {
     GREEN = '#75bd3e',
     VIOLET = '#8546eb',
 }
+
+export const MAX_BRUSH_SIZE = 20;
+export const MIN_BRUSH_SIZE = 5;

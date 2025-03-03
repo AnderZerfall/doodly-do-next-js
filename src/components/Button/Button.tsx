@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./Buttons.module.scss";
 import classNames from "classnames";
+import { useTheme } from "hooks/useTheme";
 
 interface Props {
   icon?: string;
@@ -19,6 +20,7 @@ export const Button: React.FC<Props> = ({
   type,
   text,
 }) => {
+  const { theme } = useTheme();
   return (
     <button
       onClick={handleClick}
@@ -32,7 +34,7 @@ export const Button: React.FC<Props> = ({
         <Image
           src={icon}
           alt="button_icon"
-          className="button__icon"
+          className={classNames(styles['button__icon'], { [styles["button__icon--light"]]: theme.themeTitle === 'light' })}
           width={30}
           height={30}
         />
