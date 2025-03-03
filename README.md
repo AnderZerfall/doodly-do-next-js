@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DOODLY DO - Online Brainstorming app
 
-## Getting Started
+![](https://imgur.com/54GWa8Q.gif)
 
-First, run the development server:
+### See DEMO here: https://fukuro-kanban.netlify.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Hello there! Hope you have a nice day!
+I'm Anna or Fukuro. and I'm happy to present to you what I've created!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+That's small, simple and usable online drawing app based on Next js!
+### Task requirements here: https://github.com/incodellc/github-kanban-test-task
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Let's dive into more details.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ ## Key features
 
-## Learn More
+- **Real time updates**: Powered by Firebase
+- **Smooth animations**: To improve UI, I added small cute animations and loaders.
+- **State persisting between sessions**: You can create a temp anonymous account to sync your progress between sessions!
+- **Responsive design. Mobile first**: Displayed optimally both on mobiles and desktops
+- **Hand crafted design**: Minimalistic design fully made by me.
+- **Change brush color, size or mode**: You're not limited with the palette of options!
+- **Optimization**: Say no to extra component rerenderings!
+- **Export to PNG**: Export your art pieces!
+- **CTRL+Z**: Did something wrong? okay, Just press CTRL+Z!
+- **Notifications**: if something goes wrong, you'll quickly find the core of the issue with small toast notifications!
 
-To learn more about Next.js, take a look at the following resources:
+## Used Technologies
+- **Next js**: The core of our project
+- **TypeScript**: Our security card for safety development
+- **SASS**: easy styling!
+- **Prettier**: just some sprinkles to make our code readable.
+- **React-sketch-canvas**: the base canvas for drawing.
+- **Firebase**: for accounts & database
+- **Hot-toast**: toast notifications.
+- **Hot-keys**: for tracking hotkeys pressing.
+- **Vercel**: for automatic project deployment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![](https://imgur.com/VPkJIYP.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How to run the project on your local machine?
 
-## Deploy on Vercel
+That's easy! Just follow these steps:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- *1. Clone this repository*
+- *2. Open in the terminal the folder of the project: `cd doodly-do-next-js`*
+- *3. Install all necessary dependencies with `npm install`*
+- *4. Start the production server with: `npm start`*
+- *OR the development server with: `npm run dev`*
+- *5. Done! Your application will be opened in your browser.*
