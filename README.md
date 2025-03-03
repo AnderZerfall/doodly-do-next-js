@@ -8,7 +8,6 @@ Hello there! Hope you have a nice day!
 I'm Anna or Fukuro. and I'm happy to present to you what I've created!
 
 That's small, simple and usable online drawing app based on Next js!
-### Task requirements here: https://github.com/incodellc/github-kanban-test-task
 
 Let's dive into more details.
 
